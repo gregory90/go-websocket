@@ -13,7 +13,6 @@ var (
 )
 
 func GinHandler(c *gin.Context) {
-	connections = make(map[socketio.Socket]bool)
 
 	Server.On("connection", func(so socketio.Socket) {
 		connections[so] = true
@@ -30,15 +29,14 @@ func GinHandler(c *gin.Context) {
 		Log.Info("Socket.io error: %+v", err)
 	})
 
-	c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-	origin := c.Request.Header.Get("Origin")
-	c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
 	Server.ServeHTTP(c.Writer, c.Request)
 }
 
 func Init() {
 	var err error
 	Server, err = socketio.NewServer(nil)
+
+	connections = make(map[socketio.Socket]bool)
 
 	if err != nil {
 		Log.Info("Socket.io fatal: %+v", err)
