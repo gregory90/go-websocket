@@ -1,6 +1,7 @@
 package websocket
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/googollee/go-socket.io"
 
 	. "bitbucket.org/pqstudio/go-webutils/logger"
@@ -11,10 +12,9 @@ var (
 	connections map[socketio.Socket]bool
 )
 
-func Init() {
+func GinHandler(c *gin.Context) {
 	var err error
 	connections = make(map[socketio.Socket]bool)
-	Server, err = socketio.NewServer(nil)
 
 	if err != nil {
 		Log.Info("Socket.io fatal: %+v", err)
@@ -34,6 +34,15 @@ func Init() {
 	Server.On("error", func(so socketio.Socket, err error) {
 		Log.Info("Socket.io error: %+v", err)
 	})
+	Server.ServeHTTP(c.Writer, c.Request)
+}
+
+func Init() {
+	Server, err = socketio.NewServer(nil)
+
+	if err != nil {
+		Log.Info("Socket.io fatal: %+v", err)
+	}
 }
 
 func SendMessage(msg string) {
