@@ -13,12 +13,7 @@ var (
 )
 
 func GinHandler(c *gin.Context) {
-	var err error
 	connections = make(map[socketio.Socket]bool)
-
-	if err != nil {
-		Log.Info("Socket.io fatal: %+v", err)
-	}
 
 	Server.On("connection", func(so socketio.Socket) {
 		connections[so] = true
@@ -38,6 +33,7 @@ func GinHandler(c *gin.Context) {
 }
 
 func Init() {
+	var err error
 	Server, err = socketio.NewServer(nil)
 
 	if err != nil {
