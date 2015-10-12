@@ -47,6 +47,6 @@ func Init() {
 
 func SendMessage(msg string) {
 	for conn, _ := range connections {
-		conn.Emit("update", msg)
+		conn.Emit("app", msg)
 	}
 }
