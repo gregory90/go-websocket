@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/googollee/go-socket.io"
 
-	. "bitbucket.org/pqstudio/go-webutils/logger"
+	. "github.com/gregory90/go-webutils/logger"
 )
 
 var (
