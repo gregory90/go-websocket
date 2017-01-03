@@ -1,8 +1,8 @@
 package websocket
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/googollee/go-socket.io"
+	"gopkg.in/gin-gonic/gin.v1"
 
 	. "github.com/gregory90/go-webutils/logger"
 )
